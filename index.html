@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉❤️七夕限定卡池开催❤️🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8d7ff 0%, #c9b4ff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #7a2c7e;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff3eb6, #7a2c7e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(146, 42, 151, 0.3);
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background: rgba(210, 180, 255, 0.2);
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(146, 42, 151, 0.3);
+        }
+        
+        .btn-single {
+            background: linear-gradient(45deg, #ff3eb6, #ff9cda);
+            color: white;
+        }
+        
+        .btn-ten {
+            background: linear-gradient(45deg, #7a2c7e, #b284ff);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(146, 42, 151, 0.5);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .result-area {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 20px;
+            min-height: 200px;
+        }
+        
+        .result-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90px;
+            box-shadow: 0 3px 10px rgba(146, 42, 151, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .result {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #7a2c7e;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .history {
+            margin-top: 30px;
+            width: 100%;
+        }
+        
+        .history-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-align: left;
+            color: #7a2c7e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .history-stats {
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #7a2c7e;
+            background: rgba(210, 180, 255, 0.3);
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+        
+        .history-items {
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+        
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px dashed #d4b4ff;
+            margin-bottom: 10px;
+        }
+        
+        .history-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #7a2c7e;
+        }
+        
+        .ten-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 6px;
+            margin-top: 10px;
+        }
+        
+        .ten-result-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 5px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(146, 42, 151, 0.1);
+            min-height: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .ten-result-name {
+            font-size: 0.75rem;
+            margin-bottom: 2px;
+            font-weight: bold;
+            line-height: 1.1;
+        }
+        
+        /* 横向布局 */
+        @media (orientation: landscape) {
+            .result-area {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
+        /* 竖向布局 */
+        @media (orientation: portrait) {
+            .result-area {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .result {
+                font-size: 0.8rem;
+            }
+            
+            .result-area {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .ten-results {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 5px;
+                text-align: center;
+            }
+            
+            .probability-table th, 
+            .probability-table td {
+                padding: 6px 4px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* 稀有度特效 */
+        .rarity-a {
+            background: linear-gradient(45deg, #ff7f00, #ffaa33);
+            border: 2px solid #ff7f00;
+            animation: pulse 2s infinite;
+            transform: scale(1.05);
+        }
+        
+        .rarity-b {
+            background: linear-gradient(45deg, #ff9cda, #ffd9f6, #c9b4ff, #ff9cda);
+            border: 2px solid #ff3eb6;
+            animation: rainbow 3s infinite linear;
+            background-size: 200% 200%;
+        }
+        
+        .rarity-c {
+            background: linear-gradient(45deg, #ffd700, #ffec8b);
+            border: 2px solid #ffd700;
+            animation: glow 2s infinite alternate;
+        }
+        
+        .rarity-d {
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            border: 2px solid #8e44ad;
+            animation: glow 2s infinite alternate;
+        }
+        
+        .rarity-e {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border: 2px solid #3498db;
+        }
+        
+        .rarity-f {
+            background: linear-gradient(45deg, #ecf0f1, #bdc3c7);
+            border: 2px solid #bdc3c7;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1.05); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1.05); }
+        }
+        
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+            100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
+        }
+        
+        .draw-count {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            background: rgba(210, 180, 255, 0.7);
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.7rem;
+            color: #7a2c7e;
+            box-shadow: 0 1px 3px rgba(146, 42, 151, 0.2);
+        }
+        
+        .prize-stats {
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+        
+        .prize-stats-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #7a2c7e;
+            text-align: left;
+        }
+        
+        .prize-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 8px;
+        }
+        
+        .prize-stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            align-items: center;
+        }
+        
+        .prize-stat-name {
+            font-weight: bold;
+            flex: 2;
+        }
+        
+        .prize-stat-count {
+            color: #7a2c7e;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .prize-stat-prob {
+            color: #e74c3c;
+            font-weight: bold;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+        
+        .probability-info {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #7a2c7e;
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+        
+        .probability-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .probability-table th, .probability-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #d4b4ff;
+        }
+        
+        .probability-table th {
+            background-color: rgba(210, 180, 255, 0.3);
+        }
+        
+        .probability-table tr:hover {
+            background-color: rgba(255, 218, 246, 0.3);
+        }
+        
+        .sound-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+        }
+        
+        .sound-control i {
+            font-size: 1.2rem;
+            color: #7a2c7e;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎉❤️七夕限定卡池开催❤️🎉</h1>
+        <p class="subtitle">编辑发送"咱俩试试？"💌 即有机会获得限定SSR"好呀宝宝"💕</p>
+        <p>⭕抽取日期:2025年8月29日之前</p>
+    </div>
+    
+    <div class="container">
+        <div class="stats">
+            <div>总抽奖次数: <span id="totalDraws">0</span></div>
+            <div>单抽次数: <span id="singleDraws">0</span></div>
+            <div>十连次数: <span id="tenDraws">0</span></div>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn btn-single" id="singleDraw">单次抽奖</button>
+            <button class="btn btn-ten" id="tenDraw">十连抽奖</button>
+        </div>
+        
+        <div class="result-area" id="resultArea">
+            <div class="result-container">
+                <div id="defaultText">点击按钮开始抽奖</div>
+            </div>
+        </div>
+        
+        <div class="history">
+            <div class="history-title">
+                <span>抽奖历史</span>
+                <span class="history-stats">总计: <span id="historyTotal">0</span> 次抽奖</span>
+            </div>
+            <div class="history-items" id="history"></div>
+            
+            <div class="prize-stats">
+                <div class="prize-stats-title">奖品统计 (按概率从低到高排序)</div>
+                <div class="prize-stats-grid" id="prizeStats">
+                    <!-- 奖品统计将由JS动态生成 -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="probability-info">
+    <h3>抽奖概率公示</h3>
+    <table class="probability-table">
+        <tr>
+            <th>颜色</th>
+            <th>概率</th>
+        </tr>
+        <tr>
+            <td><div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(45deg, #ff7f00, #ffaa33);margin:0 auto;"></div></td>
+            <td>0.001%</td>
+        </tr>
+        <tr>
+            <td><div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(45deg, #ff9cda, #ffd9f6, #c9b4ff, #ff9cda);margin:0 auto;"></div></td>
+            <td>1.2%</td>
+        </tr>
+        <tr>
+            <td><div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(45deg, #ffd700, #ffec8b);margin:0 auto;"></div></td>
+            <td>7%</td>
+        </tr>
+        <tr>
+            <td><div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(45deg, #8e44ad, #9b59b6);margin:0 auto;"></div></td>
+            <td>12%</td>
+        </tr>
+        <tr>
+            <td><div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(45deg, #3498db, #2980b9);margin:0 auto;"></div></td>
+            <td>51%</td>
+        </tr>
+        <tr>
+            <td><div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(45deg, #ecf0f1, #bdc3c7);margin:0 auto;"></div></td>
+            <td>28.779</td>
+        </tr>
+    </table>
+    <p style="margin-top: 10px;">*抽取概率为综合概率</p>
+</div>
+    </div>
+
+    <script>
+        // 奖品配置
+        const prizes = [
+            // A级 - 橘色 - 0.001%
+            { name: "其实我也喜欢你好久了（隐藏款）", rarity: "a", probability: 0.001 },
+            
+            // B级 - 彩色 - 1.2%
+            { name: "好呀宝宝", rarity: "b", probability: 1.2 },
+            { name: "我也爱你", rarity: "b", probability: 1.2 },
+            { name: "试试就试试", rarity: "b", probability: 1.2 },
+            { name: "其实我一直在等你", rarity: "b", probability: 1.2 },
+            
+            // C级 - 金色 - 7%
+            { name: "随机的网图", rarity: "c", probability: 7 },
+            { name: "随机的贴吧圣经", rarity: "c", probability: 7 },
+            { name: "下次再说吧", rarity: "c", probability: 7 },
+            { name: "你是个好人", rarity: "c", probability: 7 },
+            { name: "对不起，我很抱歉", rarity: "c", probability: 7 },
+            { name: "我一直把你当好朋友", rarity: "c", probability: 7 },
+            { name: "我们还是做朋友吧", rarity: "c", probability: 7 },
+            { name: "我们关系还没那么好", rarity: "c", probability: 7 },
+            
+            // D级 - 紫色 - 12%
+            { name: "这是最后通牒", rarity: "d", probability: 12 },
+            { name: "小男娘", rarity: "d", probability: 12 },
+            { name: "抱歉", rarity: "d", probability: 12 },
+            { name: "不可以", rarity: "d", probability: 12 },
+            { name: "试试就逝世", rarity: "d", probability: 12 },
+            { name: "滚出去", rarity: "d", probability: 12 },
+            
+            // E级 - 蓝色 - 51%
+            { name: "现在是幻想时刻", rarity: "e", probability: 51 },
+            { name: "柚子厨滚出去", rarity: "e", probability: 51 },
+            { name: "我其实和你同一性别", rarity: "e", probability: 51 },
+            { name: "（对方沉默不语）", rarity: "e", probability: 51 },
+            { name: "发了几个表情包糊弄你", rarity: "e", probability: 51 },
+            { name: "以后不要再和我扯上关系", rarity: "e", probability: 51 },
+            { name: "被拉黑+屏蔽", rarity: "e", probability: 51 },
+            { name: "不行", rarity: "e", probability: 51 },
+            
+            // F级 - 白色 - 28.779%
+            { name: "滚你妈的", rarity: "f", probability: 28.779 },
+            { name: "有多远滚多远", rarity: "f", probability: 28.779 },
+            { name: "狗都不喜欢你", rarity: "f", probability: 28.779 },
+            { name: "去你妈的", rarity: "f", probability: 28.779 },
+            { name: "你也配？", rarity: "f", probability: 28.779 },
+            { name: "傻逼二次元", rarity: "f", probability: 28.779 },
+            { name: "癔症又犯了？", rarity: "f", probability: 28.779 },
+            { name: "死男同真恶心", rarity: "f", probability: 28.779 }
+        ];
+        
+        // 抽奖统计
+        let totalDraws = 0;
+        let singleDraws = 0;
+        let tenDraws = 0;
+        let prizeStats = {};
+        
+        // 初始化奖品统计
+        prizes.forEach(prize => {
+            prizeStats[prize.name] = {
+                count: 0,
+                probability: prize.probability,
+                rarity: prize.rarity
+            };
+        });
+        
+        // 根据权重随机选择奖项
+        function getRandomPrize() {
+            // 创建一个包含所有奖项的数组，根据概率加权
+            let weightedPool = [];
+            prizes.forEach(prize => {
+                // 根据概率将奖项多次添加到数组中
+                const count = Math.max(1, Math.floor(prize.probability * 100));
+                for (let i = 0; i < count; i++) {
+                    weightedPool.push(prize);
+                }
+            });
+            
+            // 随机选择一个奖项
+            const randomIndex = Math.floor(Math.random() * weightedPool.length);
+            return {...weightedPool[randomIndex]};
+        }
+        
+        // 更新统计信息
+        function updateStats() {
+            document.getElementById('totalDraws').textContent = totalDraws;
+            document.getElementById('singleDraws').textContent = singleDraws;
+            document.getElementById('tenDraws').textContent = tenDraws;
+            document.getElementById('historyTotal').textContent = totalDraws;
+            
+            // 更新奖品统计
+            updatePrizeStats();
+        }
+        
+        // 更新奖品统计 - 按概率从低到高排序
+        function updatePrizeStats() {
+            const prizeStatsElement = document.getElementById('prizeStats');
+            prizeStatsElement.innerHTML = '';
+            
+            // 按概率从低到高排序
+            const sortedPrizes = Object.entries(prizeStats)
+                .filter(([_, data]) => data.count > 0)
+                .sort((a, b) => a[1].probability - b[1].probability);
+            
+            if (sortedPrizes.length === 0) {
+                prizeStatsElement.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 10px;">暂无抽奖记录</div>';
+                return;
+            }
+            
+            sortedPrizes.forEach(([name, data]) => {
+                const statItem = document.createElement('div');
+                statItem.className = 'prize-stat-item';
+                
+                statItem.innerHTML = `
+                    <span class="prize-stat-name">${name}</span>
+                    <span class="prize-stat-count">${data.count}次</span>
+                    <span class="prize-stat-prob">${data.probability}%</span>
+                `;
+                prizeStatsElement.appendChild(statItem);
+            });
+        }
+        
+        // 执行抽奖
+        function drawLottery(isTenDraw = false) {
+            const resultArea = document.getElementById('resultArea');
+            const history = document.getElementById('history');
+            
+            // 清除默认文本
+            const defaultText = document.getElementById('defaultText');
+            if (defaultText) {
+                defaultText.remove();
+            }
+            
+            // 更新统计
+            if (isTenDraw) {
+                tenDraws++;
+                totalDraws += 10;
+            } else {
+                singleDraws++;
+                totalDraws++;
+            }
+            
+            // 禁用按钮防止重复点击
+            document.getElementById('singleDraw').disabled = true;
+            document.getElementById('tenDraw').disabled = true;
+            
+            // 抽奖结果
+            setTimeout(() => {
+                const drawnPrizes = [];
+                
+                if (isTenDraw) {
+                    // 十连抽
+                    for (let i = 0; i < 10; i++) {
+                        const prize = getRandomPrize();
+                        drawnPrizes.push(prize);
+                        prizeStats[prize.name].count++;
+                    }
+                    
+                    // 添加到历史记录
+                    addTenDrawToHistory(drawnPrizes);
+                } else {
+                    // 单抽
+                    const prize = getRandomPrize();
+                    drawnPrizes.push(prize);
+                    prizeStats[prize.name].count++;
+                    
+                    // 添加到历史记录
+                    addSingleDrawToHistory(prize);
+                }
+                
+                updateStats();
+                
+                // 显示结果
+                displayResults(drawnPrizes);
+                
+                // 重新启用按钮
+                document.getElementById('singleDraw').disabled = false;
+                document.getElementById('tenDraw').disabled = false;
+            }, 500);
+        }
+        
+        // 添加单抽记录到历史
+        function addSingleDrawToHistory(prize) {
+            const history = document.getElementById('history');
+            
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+            
+            const header = document.createElement('div');
+            header.className = 'history-item-header';
+            header.innerHTML = `<span>单抽 (#${totalDraws})</span>`;
+            
+            const content = document.createElement('div');
+            content.className = `ten-result-item rarity-${prize.rarity}`;
+            content.innerHTML = `
+                <div class="ten-result-name">${prize.name}</div>
+            `;
+            
+            historyItem.appendChild(header);
+            historyItem.appendChild(content);
+            history.prepend(historyItem);
+        }
+        
+        // 添加十连抽记录到历史
+        function addTenDrawToHistory(prizes) {
+            const history = document.getElementById('history');
+            
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+            
+            const header = document.createElement('div');
+            header.className = 'history-item-header';
+            header.innerHTML = `<span>十连抽 (#${totalDraws-9} - #${totalDraws})</span><span>${new Date().toLocaleTimeString()}</span>`;
+            
+            const tenResults = document.createElement('div');
+            tenResults.className = 'ten-results';
+            
+            prizes.forEach(prize => {
+                const resultItem = document.createElement('div');
+                resultItem.className = `ten-result-item rarity-${prize.rarity}`;
+                resultItem.innerHTML = `
+                    <div class="ten-result-name">${prize.name}</div>
+                `;
+                tenResults.appendChild(resultItem);
+            });
+            
+            historyItem.appendChild(header);
+            historyItem.appendChild(tenResults);
+            history.prepend(historyItem);
+        }
+        
+        // 显示抽奖结果
+        function displayResults(prizes) {
+            const resultArea = document.getElementById('resultArea');
+            resultArea.innerHTML = '';
+            
+            prizes.forEach((prize, index) => {
+                const resultContainer = document.createElement('div');
+                resultContainer.className = `result-container rarity-${prize.rarity}`;
+                
+                const drawCount = document.createElement('div');
+                drawCount.className = 'draw-count';
+                drawCount.textContent = `#${totalDraws - prizes.length + index + 1}`;
+                resultContainer.appendChild(drawCount);
+                
+                const resultElement = document.createElement('div');
+                resultElement.className = 'result';
+                resultElement.textContent = prize.name;
+                
+                resultContainer.appendChild(resultElement);
+                resultArea.appendChild(resultContainer);
+            });
+        }
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 绑定按钮事件
+            document.getElementById('singleDraw').addEventListener('click', () => drawLottery(false));
+            document.getElementById('tenDraw').addEventListener('click', () => drawLottery(true));
+            
+            // 初始化奖品统计
+            updatePrizeStats();
+        });
+    </script>
+</body>
+</html>
